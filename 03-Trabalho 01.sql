@@ -46,7 +46,7 @@ use spotifalso;
 -- Considerando exclusivamente as músicas marcadas como explícitas.
 	SELECT
 		AVG(musica.duracao) AS 'Média Duração',
-        MAX(musica.duracao) AS 'Duração mais longa',
+        MAX(musica.duracao) AS 'Duração da música mais longa',
         COUNT(musica.duracao) AS 'Tempo total acumulado'
 	FROM musica
     WHERE musica.explicita = 1;
@@ -54,11 +54,27 @@ use spotifalso;
 -- Exercício 6: Apresente o código de cada álbum acompanhado da duração mais longa de uma música vinculada a ele.
 -- Ao final, organize a tabela em ordem crescente, da menor duração para a maior duração.
 	SELECT
-		album.id_tipo_album AS 'ID',
-        album.
+		album.id_album AS 'ID',
+        album.titulo AS 'Album',
+        MAX(musica.duracao) AS 'Duração mais longa'
 	FROM album
+    INNER JOIN musica
+		ON album.id_album = musica.id_album
+	GROUP BY 
+		album.id_album
+	ORDER BY MAX(musica.duracao);
+    
 -- Exercício 7: Exiba o código do idioma e a quantidade de músicas cadastradas, contabilizando apenas aquelas que ultrapassam a marca de 4 minutos.
-
+	SELECT
+		idioma.id_idioma AS 'Código',
+        idioma.descricao AS 'Idioma',
+        COUNT(musica.id_musica) AS 'Quantidade de músicas que passam de 4 minutos'
+	FROM musica
+    INNER JOIN idioma
+		ON musica.id_idioma = idioma.id_idioma
+	WHERE musica.duracao > 240
+    GROUP BY idioma.id_idioma;
+    
 -- Exercício 8: Agrupe as músicas pelo código do gênero e pelo status de conteúdo explícito, exibindo ambas as colunas junto com a média de duração para cada combinação.
 -- PS: você pode inserir mais de uma coluna no agrupamento. Ao final, arredonde a média para duas casas decimais.
 
