@@ -10,18 +10,18 @@ use spotifalso;
 	SELECT
 		musica.titulo AS 'Música',
         musica.duracao AS 'Duração',
-        idioma.descricao AS 'Idioma'
+        idioma.descricao AS 'Idioma' -- Coloquei apenas para conferir se não aparece o idioma inglês
 	FROM musica
     INNER JOIN idioma
 		ON musica.id_idioma = idioma.id_idioma
-    WHERE NOT idioma.descricao = 'Inglês' AND musica.duracao < 180;
+    WHERE NOT idioma.descricao = 'Inglês' AND musica.duracao < 60*3;
 
 -- Exercício 2: Liste o título e a duração total dos álbuns que pertencem aos gêneros 1, 2 ou 5, mas que possuem menos de 15 músicas.
 	SELECT
-		album.titulo AS 'Título do Album',
+		album.titulo AS 'Album',
         album.duracao_total AS 'Duração total',
-        genero.id_genero AS 'ID Gênero',
-        album.qtd_musicas AS 'Músicas'
+        album.id_genero AS 'ID Gênero', -- Coloquei apenas comno referência
+        album.qtd_musicas AS 'Músicas' -- Coloquei apenas comno referência
 	FROM album
     INNER JOIN genero
 		ON album.id_genero = genero.id_genero
@@ -32,7 +32,7 @@ use spotifalso;
 	SELECT
 		musica.titulo AS 'Música'
 	FROM musica
-    WHERE titulo LIKE '%Y';
+    WHERE titulo LIKE '%y';
     
 -- Exercício 4: Recupere o título e a data de lançamento das músicas que NÃO foram lançadas entre os anos 2000 e 2005.
 		SELECT
@@ -76,7 +76,7 @@ use spotifalso;
 -- PS: você pode inserir mais de uma coluna no agrupamento. Ao final, arredonde a média para duas casas decimais.
 	SELECT
 		musica.id_genero AS 'Código gênero',
-        musica.explicita AS 'Explicito',
+        musica.explicita AS 'Explícito',
         ROUND(AVG(musica.duracao), 2) AS 'Média duração'
 	FROM musica
 	GROUP BY musica.id_genero, musica.explicita;
@@ -86,7 +86,8 @@ use spotifalso;
 -- Você deve usar obrigatoriamente a tabela "musica" para fazer esse exercício.
 	SELECT 
 		musica.id_album AS 'Código do album',
-        COUNT(*) AS 'Quantidade de músicas'
+        COUNT(*) AS 'Quantidade de músicas',
+        SUM(musica.duracao) AS 'Duração Total Somada' -- coloquei apenas como referência
 	FROM musica
     WHERE musica.id_album IS NOT NULL
 	GROUP BY musica.id_album
