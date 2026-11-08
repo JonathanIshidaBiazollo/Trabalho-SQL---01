@@ -5,7 +5,7 @@ R.A.: 2032320
 Turma: BCC-3B
 Professor: Claúdio Jesus
 =================================================*/
-
+use spotifalso;
 -- Exercício 1: Identifique o título e a duração das músicas que não são cantadas em inglês e que duram menos de 3 minutos.
 	SELECT
 		musica.titulo AS 'Música',
@@ -44,17 +44,19 @@ Professor: Claúdio Jesus
 
 -- Exercício 5: Calcule, em uma única consulta, a média de duração, a duração da faixa mais longa e o tempo total acumulado.
 -- Considerando exclusivamente as músicas marcadas como explícitas.
-	SELECT 
+	SELECT
 		AVG(musica.duracao) AS 'Média Duração',
         MAX(musica.duracao) AS 'Duração mais longa',
         COUNT(musica.duracao) AS 'Tempo total acumulado'
 	FROM musica
     WHERE musica.explicita = 1;
 		
-
 -- Exercício 6: Apresente o código de cada álbum acompanhado da duração mais longa de uma música vinculada a ele.
 -- Ao final, organize a tabela em ordem crescente, da menor duração para a maior duração.
-
+	SELECT
+		album.id_tipo_album AS 'ID',
+        album.
+	FROM album
 -- Exercício 7: Exiba o código do idioma e a quantidade de músicas cadastradas, contabilizando apenas aquelas que ultrapassam a marca de 4 minutos.
 
 -- Exercício 8: Agrupe as músicas pelo código do gênero e pelo status de conteúdo explícito, exibindo ambas as colunas junto com a média de duração para cada combinação.
