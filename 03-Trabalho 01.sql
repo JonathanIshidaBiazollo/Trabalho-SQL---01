@@ -77,9 +77,26 @@ use spotifalso;
     
 -- Exercício 8: Agrupe as músicas pelo código do gênero e pelo status de conteúdo explícito, exibindo ambas as colunas junto com a média de duração para cada combinação.
 -- PS: você pode inserir mais de uma coluna no agrupamento. Ao final, arredonde a média para duas casas decimais.
+	SELECT
+		genero.id_genero AS 'Código gênero',
+        musica.explicita AS 'Explicito',
+        ROUND(AVG(musica.duracao), 2) AS 'Média duração'
+	FROM genero
+    INNER JOIN musica
+		ON genero.id_genero = musica.id_genero
+	GROUP BY genero.id_genero, musica.explicita;
+		
 
 -- Exercício 9: Liste os códigos dos álbuns e a quantidade de músicas de cada um, mas exiba estritamente os álbuns cuja duração total somada ultrapasse 20 minutos.
 -- Você deve usar obrigatoriamente a tabela "musica" para fazer esse exercício.
-
+	SELECT 
+		musica.id_album AS 'Código do album',
+        COUNT(*) AS 'Quantidade de músicas',
+        SUM(musica.duracao) AS 'Duração total'
+	FROM musica
+    WHERE musica.id_album IS NOT NULL
+	GROUP BY musica.id_album
+    HAVING SUM(musica.duracao) > 60*20;
+    
 -- Exercício 10: Mostre o código do gênero e a quantidade de músicas não explícitas associadas a ele.
 -- Filtre o resultado para apresentar apenas os gêneros que possuam 5 ou mais faixas com esse perfil seguro.
