@@ -20,8 +20,7 @@ use spotifalso;
 	SELECT
 		album.titulo AS 'Título do Album',
         album.duracao_total AS 'Duração total',
-        genero.titulo AS 'Gênero',
-        -- genero.id_genero AS 'ID do gênero',
+        genero.id_genero AS 'ID Gênero',
         album.qtd_musicas AS 'Músicas'
 	FROM album
     INNER JOIN genero
@@ -47,15 +46,14 @@ use spotifalso;
 	SELECT
 		AVG(musica.duracao) AS 'Média Duração',
         MAX(musica.duracao) AS 'Duração da música mais longa',
-        COUNT(musica.duracao) AS 'Tempo total acumulado'
+        SUM(musica.duracao) AS 'Tempo total acumulado'
 	FROM musica
     WHERE musica.explicita = 1;
 		
 -- Exercício 6: Apresente o código de cada álbum acompanhado da duração mais longa de uma música vinculada a ele.
 -- Ao final, organize a tabela em ordem crescente, da menor duração para a maior duração.
 	SELECT
-		album.id_album AS 'ID',
-        album.titulo AS 'Album',
+		album.id_album AS 'ID Album',
         MAX(musica.duracao) AS 'Duração mais longa'
 	FROM album
     INNER JOIN musica
@@ -66,8 +64,7 @@ use spotifalso;
     
 -- Exercício 7: Exiba o código do idioma e a quantidade de músicas cadastradas, contabilizando apenas aquelas que ultrapassam a marca de 4 minutos.
 	SELECT
-		idioma.id_idioma AS 'Código',
-        idioma.descricao AS 'Idioma',
+		idioma.id_idioma AS 'Código do Idioma',
         COUNT(musica.id_musica) AS 'Quantidade de músicas que passam de 4 minutos'
 	FROM musica
     INNER JOIN idioma
@@ -78,21 +75,18 @@ use spotifalso;
 -- Exercício 8: Agrupe as músicas pelo código do gênero e pelo status de conteúdo explícito, exibindo ambas as colunas junto com a média de duração para cada combinação.
 -- PS: você pode inserir mais de uma coluna no agrupamento. Ao final, arredonde a média para duas casas decimais.
 	SELECT
-		genero.id_genero AS 'Código gênero',
+		musica.id_genero AS 'Código gênero',
         musica.explicita AS 'Explicito',
         ROUND(AVG(musica.duracao), 2) AS 'Média duração'
-	FROM genero
-    INNER JOIN musica
-		ON genero.id_genero = musica.id_genero
-	GROUP BY genero.id_genero, musica.explicita;
+	FROM musica
+	GROUP BY musica.id_genero, musica.explicita;
 		
 
 -- Exercício 9: Liste os códigos dos álbuns e a quantidade de músicas de cada um, mas exiba estritamente os álbuns cuja duração total somada ultrapasse 20 minutos.
 -- Você deve usar obrigatoriamente a tabela "musica" para fazer esse exercício.
 	SELECT 
 		musica.id_album AS 'Código do album',
-        COUNT(*) AS 'Quantidade de músicas',
-        SUM(musica.duracao) AS 'Duração total'
+        COUNT(*) AS 'Quantidade de músicas'
 	FROM musica
     WHERE musica.id_album IS NOT NULL
 	GROUP BY musica.id_album
