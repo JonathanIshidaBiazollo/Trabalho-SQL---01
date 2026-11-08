@@ -100,3 +100,12 @@ use spotifalso;
     
 -- Exercício 10: Mostre o código do gênero e a quantidade de músicas não explícitas associadas a ele.
 -- Filtre o resultado para apresentar apenas os gêneros que possuam 5 ou mais faixas com esse perfil seguro.
+	SELECT
+		genero.id_genero AS 'Còdigo Gênero',
+        COUNT(musica.explicita) AS 'Quantidade de músicas não explícitas'
+	FROM genero
+    INNER JOIN musica
+		ON genero.id_genero = musica.id_genero
+	WHERE musica.explicita = 0
+	GROUP BY genero.id_genero
+	HAVING COUNT(*) >= 5;
