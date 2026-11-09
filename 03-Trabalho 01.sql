@@ -20,8 +20,8 @@ use spotifalso;
 	SELECT
 		album.titulo AS 'Album',
         album.duracao_total AS 'Duração total',
-        album.id_genero AS 'ID Gênero', -- Coloquei apenas comno referência
-        album.qtd_musicas AS 'Músicas' -- Coloquei apenas comno referência
+        album.id_genero AS 'ID Gênero', -- Coloquei apenas como referência
+        album.qtd_musicas AS 'Músicas' -- Coloquei apenas como referência
 	FROM album
     INNER JOIN genero
 		ON album.id_genero = genero.id_genero
